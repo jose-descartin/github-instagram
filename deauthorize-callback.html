@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deauthorize Callback</title>
+</head>
+<body>
+    <script>
+        // Handle Instagram deauthorization callback
+        // This endpoint receives a notification when a user deauthorizes your app
+        
+        // For GET requests (verification)
+        if (window.location.search) {
+            const params = new URLSearchParams(window.location.search);
+            const hubMode = params.get('hub.mode');
+            const hubChallenge = params.get('hub.challenge');
+            const hubVerifyToken = params.get('hub.verify_token');
+            
+            // Verify token (use the same token you set in Meta developer settings)
+            const VERIFY_TOKEN = 'instagram_deauth_token';
+            
+            if (hubMode === 'subscribe' && hubVerifyToken === VERIFY_TOKEN) {
+                // Return the challenge to verify the endpoint
+                document.body.textContent = hubChallenge;
+            }
+        }
+        
+        // For POST requests (actual deauthorization notification)
+        // In a real app, you would handle this server-side
+        // This is just a placeholder for the endpoint to exist
+        
+        console.log('Deauthorize callback endpoint ready');
+    </script>
+    
+    <h1>Deauthorize Callback Endpoint</h1>
+    <p>This endpoint handles deauthorization notifications from Instagram.</p>
+</body>
+</html>

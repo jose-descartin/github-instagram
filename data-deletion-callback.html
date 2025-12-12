@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion Callback</title>
+</head>
+<body>
+    <script>
+        // Handle Instagram data deletion callback
+        // This endpoint receives a notification when a user requests data deletion
+        
+        // For GET requests (verification)
+        if (window.location.search) {
+            const params = new URLSearchParams(window.location.search);
+            const hubMode = params.get('hub.mode');
+            const hubChallenge = params.get('hub.challenge');
+            const hubVerifyToken = params.get('hub.verify_token');
+            
+            // Verify token (use the same token you set in Meta developer settings)
+            const VERIFY_TOKEN = 'instagram_deletion_token';
+            
+            if (hubMode === 'subscribe' && hubVerifyToken === VERIFY_TOKEN) {
+                // Return the challenge to verify the endpoint
+                document.body.textContent = hubChallenge;
+            }
+        }
+        
+        // For POST requests (actual deletion request)
+        // In a real production app, you would:
+        // 1. Receive the user_id from the POST request
+        // 2. Delete all user data from your database
+        // 3. Return a confirmation URL and deletion confirmation code
+        // 4. This must be handled server-side with proper data deletion logic
+        
+        // Example response format (for reference):
+        // {
+        //   "url": "https://your-app.com/deletion-status?id=12345",
+        //   "confirmation_code": "abc123xyz"
+        // }
+        
+        console.log('Data deletion callback endpoint ready');
+    </script>
+    
+    <h1>Data Deletion Callback Endpoint</h1>
+    <p>This endpoint handles data deletion requests from Instagram.</p>
+    <p><strong>Note:</strong> In production, this should be a server-side endpoint that actually deletes user data.</p>
+</body>
+</html>
